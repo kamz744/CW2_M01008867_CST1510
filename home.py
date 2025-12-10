@@ -1,26 +1,27 @@
 import streamlit as st
-import pandas as pd
-from app_model.db import conn
-from app_model.cyber_incidents import get_all_cyber_incidents
-df = pd.DataFrame({
-"Name": ["Jordan", "Alex", "Taylor"],
- "Score": [95, 88, 76]
-})
+from app.db import get_db_connection
+from main import validate_password, hash_password
+from app.users import add_user, get_user
 
 
-st.title("welcome to home page")
-st.write("hello")
-st.header("hello")
-st.subheader("subheader")
-st.write("flexible display")
+conn = get_db_connection()
 
-st.caption("capture")
+st.header('Welcome !!!')
 
-st.dataframe(df)
+if "logged_in not in" not in st.session_state:
+    st.session_state["logged_in"]=False
+
+if st.button("log in") :
+    st.session_state["logged_in"]=True
+    st.success("you are now logged in")
+
+tab_login, tab_register = st.tabs(["login","register"])
+
+with tab_login:
+    login_username = st.text_input("Username")
+    login_password = st.text_input("password", type="password")
 
 
-with st.sidebar:
-    st.header("navigation")
-    severity_=st.selectbox ("severity,data) ["severity"].unique())
-                           
-filtered_data = data [data [" severity "] == severity_]                    
+with tab_register:
+    register_username=st.text_input("new username")
+    register_password=st.text_input("new password",type="password")

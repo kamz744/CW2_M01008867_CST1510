@@ -1,0 +1,7 @@
+import bcrypt
+
+
+
+def  hash_password (pwd):
+    password_bytes=pwd.encode("utf-8")    
+    salt=bcrypt.gensalt()
